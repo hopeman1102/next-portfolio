@@ -120,6 +120,7 @@ const handler = async (req, res) => {
         return res.status(400).json({ success: false });
     }
     try {
+        return res.send({msg: 'hello'});
         const account = await Account.findById(req.query.id).populate('resumeId');
         if(account) {
             const category = await Niche.findById(account.category);
