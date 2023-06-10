@@ -1,9 +1,9 @@
 import { Description, Heading, ProjectCard } from '../utils';
-import { useUserContext } from '../context/user';
+import { GetUserContext } from '../context/user';
 
 const projects = () => {
 
-	const {user} = useUserContext();
+	const {user} = GetUserContext();
 
 	return (
 		<section>

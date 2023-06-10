@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useUserContext } from '../context/user';
+import { GetUserContext } from '../context/user';
 
 const NavBar = () => {
 	const router = useRouter();
@@ -10,7 +10,7 @@ const NavBar = () => {
 	const webLinks = [
 		{ name: 'Projects', path: '/projects' }
 	];
-	const {user} = useUserContext();
+	const {user} = GetUserContext();
 	return (
 		<div className='bg-sh-dark-500 bg-opacity-80 sticky top-0 z-20 backdrop-filter backdrop-blur-sm shadow-lg'>
 			<div className='max-w-[50rem] mx-auto w-full px-5 py-2.5 md:px-10 lg:px-0'>

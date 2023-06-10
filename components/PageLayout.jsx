@@ -1,9 +1,9 @@
 import { Footer, NavBar } from '../components';
 import Meta from '../utils/Meta';
-import { useUserContext } from '../context/user';
+import { GetUserContext } from '../context/user';
 
 const PageLayout = ({ children }) => {
-	const {user} = useUserContext();
+	const {user} = GetUserContext();
 	if(user == null) {
 		return (<p>Loading...</p>)
 	}

@@ -1,10 +1,10 @@
 import { Hero } from '../components';
 import { EduCard, Heading, SkillCap, ExpCard } from '../utils';
-import { useUserContext } from '../context/user';
+import { GetUserContext } from '../context/user';
 
 export default function Home() {
 
-	const {user} = useUserContext();
+	const {user} = GetUserContext();
 
 	return (
 		<>

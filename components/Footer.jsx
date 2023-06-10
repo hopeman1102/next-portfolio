@@ -1,8 +1,8 @@
-import { useUserContext } from '../context/user';
+import { GetUserContext } from '../context/user';
 
 const Footer = () => {
 
-	const {user} = useUserContext();
+	const {user} = GetUserContext();
 
 	return (
 		<footer className='max-w-[50rem] mx-auto w-full py-2 px-10 md:px-0'>
