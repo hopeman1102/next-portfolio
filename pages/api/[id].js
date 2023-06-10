@@ -120,7 +120,6 @@ const handler = async (req, res) => {
         return res.status(400).json({ success: false });
     }
     try {
-        return res.send({msg: 'hello'});
         const account = await Account.findById(req.query.id).populate('resumeId');
         if(account) {
             const category = await Niche.findById(account.category);
@@ -139,7 +138,8 @@ const handler = async (req, res) => {
             return res.status(200).json({ success: true, data })
         }
         return res.status(400).json({ success: false });
-    } catch {
+    } catch(e) {
+        return res.json({eroor: e});
         return res.status(400).json({ success: false });
     }
 };
