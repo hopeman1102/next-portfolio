@@ -13,7 +13,6 @@ const Meta = () => {
 			<meta name='audience' content='Everyone' />
 			<meta name='color-scheme' content='only dark' />
 			<meta name='theme-color' content='#1A1F2A' />
-			<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 			{/* Page Information */}
 			<title>{pageTitle}</title>
 		</Head>
