@@ -5,7 +5,6 @@ export default function Document() {
 		<Html lang='en'>
 			<Head>
 				<link rel='icon' href='/favicon.ico' />
-				<meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 				{/* <Script
 					src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}`}
 					strategy='afterInteractive'
