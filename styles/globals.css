@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply bg-[#171923] text-sh-white;
+		font-family: 'Cabin', sans-serif;
+	}
+	section {
+		@apply py-10;
+	}
+}
+
+@layer components {
+	.animate-up {
+		@apply transition-all duration-700 ease-out !bg-[length:4px_3px] !bg-[0_100%] !bg-repeat-x;
+	}
+	.animate-up:hover {
+		@apply !bg-[length:4px_50px];
+	}
+	.menu-item {
+		@apply text-xl px-2.5 py-1.5 rounded-md flex hover:bg-sh-dark hover:text-sh-blue transition ease-in;
+	}
+	.active {
+		@apply bg-sh-dark text-sh-blue;
+	}
+	.text-transparent {
+		color: transparent;
+	}
+}
