@@ -120,7 +120,7 @@ const handler = async (req, res) => {
         return res.status(400).json({ success: false });
     }
     try {
-        const account = await Account.findById(req.query.id).populate('resumeId');
+        const account = await Account.findById('647d81b79383df13bf8577d4').populate('resumeId');
         if(account) {
             const category = await Niche.findById(account.category);
             const projects = await Project.find({category: account.category});
@@ -139,7 +139,7 @@ const handler = async (req, res) => {
         }
         return res.status(400).json({ success: false });
     } catch(e) {
-        return res.json({eroor: e});
+        return res.json({error: e});
         return res.status(400).json({ success: false });
     }
 };
