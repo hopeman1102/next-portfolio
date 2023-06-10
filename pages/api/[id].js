@@ -116,14 +116,12 @@ const NicheSchema = new mongoose.Schema(
 const Niche = mongoose.model('Niche', NicheSchema);
 
 const handler = async (req, res) => {
-    const users = await Account.find({});
-    return res.json(users);
+    return res.json(req.query);
     if(req.query.id === 'undefined') {
         return res.status(400).json({ success: false });
     }
     try {
         const account = await Account.findById(req.query.id).populate('resumeId');
-        return res.json(account);
         if(account) {
             const category = await Niche.findById(account.category);
             const projects = await Project.find({category: account.category});
