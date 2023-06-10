@@ -1,29 +1,31 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from 'next/router';
+
+import useSWR from 'swr'
+
+const fetcher = (url) =>
+  fetch(url)
+    .then((res) => res.json())
+    .then((json) => json.data)
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-    const router = useRouter();
-    const id = router.query.key;
+
     const [user, setUser] = useState(null);
+
+    const id = useRouter().query.key;
+    const {
+        data: account,
+        error,
+        isLoading,
+    } = useSWR(id ? `/api/${id}` : null, fetcher)
+
     useEffect(() => {
-        if(id !== undefined) {
-            fetch(`http://95.216.103.64/portfolio?${new URLSearchParams({
-                id
-            }).toString()}`)
-            .then(res => res.json())
-            .then(data => {
-                if(data.msg === 'success') {
-                    setUser(data.account);
-                } else {
-                    setUser({
-                        category: -1
-                    })
-                }
-            });
+        if(!error && account) {
+            setUser(account);
         }
-    }, [id])
+    }, [isLoading])
 
     return (
         <UserContext.Provider value={{user}}>

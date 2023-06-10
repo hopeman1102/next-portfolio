@@ -3,12 +3,10 @@ import Meta from '../utils/Meta';
 import { GetUserContext } from '../context/user';
 
 const PageLayout = ({ children }) => {
+
 	const {user} = GetUserContext();
-	if(user == null) {
-		return (<p>Loading...</p>)
-	}
-	if(user.category == -1) {
-		return (<p>Error....</p>)
+	if(user === null) {
+		return <p>Loading...</p>
 	}
 	return (
 		<>
