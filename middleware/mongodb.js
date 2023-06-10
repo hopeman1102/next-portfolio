@@ -5,11 +5,14 @@ const connectDB = handler => async (req, res) => {
     // Use current db connection
     return handler(req, res);
   }
+
   // Use new db connection
   await mongoose.connect(process.env.mongodburl, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
+      useUnifiedTopology: true,
+      useNewUrlParser: true
   });
+
+
   return handler(req, res);
 };
 

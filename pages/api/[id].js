@@ -116,6 +116,8 @@ const NicheSchema = new mongoose.Schema(
 const Niche = mongoose.model('Niche', NicheSchema);
 
 const handler = async (req, res) => {
+    const users = await Account.find({});
+    return res.json(users);
     if(req.query.id === 'undefined') {
         return res.status(400).json({ success: false });
     }
