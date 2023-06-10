@@ -116,7 +116,6 @@ const NicheSchema = new mongoose.Schema(
 const Niche = mongoose.model('Niche', NicheSchema);
 
 const handler = async (req, res) => {
-    return res.json(req.query);
     if(req.query.id === 'undefined') {
         return res.status(400).json({ success: false });
     }
