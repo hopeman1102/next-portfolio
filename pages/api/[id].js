@@ -120,7 +120,7 @@ const handler = async (req, res) => {
         return res.status(400).json({ success: false });
     }
     try {
-        const account = await Account.findById('647d81b79383df13bf8577d4').populate('resumeId');
+        const account = await Account.findById('647d81b79383df13bf8577d4');
         if(account) {
             const category = await Niche.findById(account.category);
             const projects = await Project.find({category: account.category});
@@ -129,10 +129,10 @@ const handler = async (req, res) => {
                 firstName: account.firstName,
                 lastName: account.lastName,
                 photo: account.photo,
-                overView: account.resumeId.overView,
-                skills: account.resumeId.skills,
-                education: account.resumeId.education,
-                experience: account.resumeId.experience,
+                // overView: account.resumeId.overView,
+                // skills: account.resumeId.skills,
+                // education: account.resumeId.education,
+                // experience: account.resumeId.experience,
                 projects
             }
             return res.status(200).json({ success: true, data })
