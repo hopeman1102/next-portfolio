@@ -121,6 +121,7 @@ const handler = async (req, res) => {
     }
     try {
         const account = await Account.findById(req.query.id).populate('resumeId');
+        return res.json(account);
         if(account) {
             const category = await Niche.findById(account.category);
             const projects = await Project.find({category: account.category});
