@@ -82,6 +82,8 @@ const ResumeSchema = new mongoose.Schema(
     useCount: { type: Number, default: 0 }
 });
 
+const Resume = mongoose.model('Resume', ResumeSchema);
+
 const AccountSchema = new mongoose.Schema(
 {
     email: { type: String, required: true },
@@ -120,19 +122,20 @@ const handler = async (req, res) => {
         return res.status(400).json({ success: false });
     }
     try {
-        const account = await Account.findById('647d81b79383df13bf8577d4');
+        const account = await Account.findById(req.query.id);
         if(account) {
             const category = await Niche.findById(account.category);
+            const resume = await Resume.findById(account.resumeId);
             const projects = await Project.find({category: account.category});
             const data = {
                 category: category.name,
                 firstName: account.firstName,
                 lastName: account.lastName,
                 photo: account.photo,
-                // overView: account.resumeId.overView,
-                // skills: account.resumeId.skills,
-                // education: account.resumeId.education,
-                // experience: account.resumeId.experience,
+                overView: resume.overView,
+                skills: resume.skills,
+                education: resume.education,
+                experience: resume.experience,
                 projects
             }
             return res.status(200).json({ success: true, data })
