@@ -8,6 +8,7 @@ mongoose.models = {};
 const ProjectSchema = new mongoose.Schema(
 {
     category: { type: ObjectId, required: true },
+    resume: { type: ObjectId, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     images: [{ type: String }],
@@ -18,18 +19,13 @@ const ProjectSchema = new mongoose.Schema(
 
 const Project = mongoose.model('Project', ProjectSchema);
 
-const ResumeSchema = new mongoose.Schema(
+
+const BaseSchema = new mongoose.Schema(
 {
-    category: { type: ObjectId, required: true },
     country: { type: String, required: true },
     photo: { type: String, rquired: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    title: { type: String, required: true },
-    hourly: { type: Number, required: true },
-    overView: { type: String, required: true },
-    skills: [{type: String}],
-    coverLetter: { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
     education: [{
         type: {
             school: { type: String, required: true },
@@ -77,8 +73,22 @@ const ResumeSchema = new mongoose.Schema(
             phone: { type: String, required: true }
         },
         required: true
-    },
+    }
+});
 
+const Base = mongoose.model('Base', BaseSchema);
+
+const ResumeSchema = new mongoose.Schema(
+{
+    category: { type: ObjectId, required: true },
+    baseId: {type: ObjectId, required: true, ref: 'Base'},
+    niche: { type: String, required: true },
+    title: { type: String, required: true },
+    hourly: { type: Number, required: true },
+    overView: { type: String, required: true },
+    skills: [{type: String}],
+    coverLetter: { type: String },
+    count: { type: Number, default: 2 },
     useCount: { type: Number, default: 0 }
 });
 
@@ -125,8 +135,8 @@ const handler = async (req, res) => {
         const account = await Account.findById(req.query.id);
         if(account) {
             const category = await Niche.findById(account.category);
-            const resume = await Resume.findById(account.resumeId);
-            const projects = await Project.find({category: account.category});
+            const resume = await Resume.findById(account.resumeId).populate('baseId');
+            const projects = await Project.find({resume: account.resumeId});
             const data = {
                 category: category.name,
                 firstName: account.firstName,
@@ -134,8 +144,8 @@ const handler = async (req, res) => {
                 photo: account.photo,
                 overView: resume.overView,
                 skills: resume.skills,
-                education: resume.education,
-                experience: resume.experience,
+                education: resume.baseId.education,
+                experience: resume.baseId.experience,
                 projects
             }
             return res.status(200).json({ success: true, data })
