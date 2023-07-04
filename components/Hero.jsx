@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 const Hero = ({user}) => {
-
+	const sentences = user.overView.split('.');
 	return (
 		<section>
 			<div className='flex items-center justify-center md:flex-row flex-col'>
@@ -33,7 +33,11 @@ const Hero = ({user}) => {
 					</div>
 
 					<p className='text-2xl font-normal leading-20'>
-						{user.overView}
+						{sentences[0]+'.'}
+					</p>
+					<br/>
+					<p className='text-2xl font-normal leading-20'>
+						{sentences[1]+'.'}
 					</p>
 				</div>
 			</div>
