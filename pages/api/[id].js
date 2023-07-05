@@ -5,20 +5,31 @@ const ObjectId = mongoose.Schema.ObjectId;
 
 mongoose.models = {};
 
-const ProjectSchema = new mongoose.Schema(
-{
+const ProjectSchema = new mongoose.Schema({
     category: { type: ObjectId, required: true },
     resume: { type: ObjectId, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     images: [{ type: String }],
-    skills: [{ type: String }],
+    keywords: [{ type: String }],
     url: { type: String, default: '' },
     github: { type: String, default: '' }
 });
 
 const Project = mongoose.model('Project', ProjectSchema);
 
+const BidSchema = new mongoose.Schema({
+    email: { type: String, required: true },
+    jobURL: { type: String, required: true },
+    projects: [{type: ObjectId}],
+    auto: { type: Boolean, default: false },
+    status: { type: Number, default: 0 }, // 0: sending, 1: send, 2: hired
+}, 
+{   
+    timestamps: true    
+});
+
+const Bid = mongoose.model('Bid', BidSchema);
 
 const BaseSchema = new mongoose.Schema(
 {
@@ -115,44 +126,45 @@ const AccountSchema = new mongoose.Schema(
 
 const Account = mongoose.model('Account', AccountSchema);
 
-const NicheSchema = new mongoose.Schema(
-{
+const NicheSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    keywords: [{ type: String }],
-    rss: { type: String },
-    accountCount: { type: Number, default: 0 },
-    visible: {type: Boolean, default: true },
-    enable: {type: Boolean, default: true }
+    rss: { type: String, required: true },
+    enable: {type: Boolean, default: true },
+    auto: { type: Boolean, default: false },
+    mix: { type: Boolean, default: false }
 });
 
 const Niche = mongoose.model('Niche', NicheSchema);
+
 
 const handler = async (req, res) => {
     if(req.query.id === 'undefined') {
         return res.status(400).json({ success: false });
     }
     try {
-        const account = await Account.findById(req.query.id);
-        if(account) {
-            const category = await Niche.findById(account.category);
-            const resume = await Resume.findById(account.resumeId).populate('baseId');
-            const projects = await Project.find({resume: account.resumeId});
-            const data = {
-                category: category.name,
-                firstName: account.firstName,
-                lastName: account.lastName,
-                photo: account.photo,
-                overView: resume.overView,
-                skills: resume.skills,
-                education: resume.baseId.education,
-                experience: resume.baseId.experience,
-                projects
+        const bid = await Bid.findById(req.query.id);
+        if(bid) {
+            const account = await Account.findOne({email: bid.email});
+            if(account) {
+                const category = await Niche.findById(account.category);
+                const resume = await Resume.findById(account.resumeId).populate('baseId');
+                const projects = await Project.find({_id: {$in: bid.projects}});
+                const data = {
+                    category: category.name,
+                    firstName: account.firstName,
+                    lastName: account.lastName,
+                    photo: account.photo,
+                    overView: resume.overView,
+                    skills: resume.skills,
+                    education: resume.baseId.education,
+                    experience: resume.baseId.experience,
+                    projects
+                }
+                return res.status(200).json({ success: true, data })
             }
-            return res.status(200).json({ success: true, data })
         }
         return res.status(400).json({ success: false });
     } catch(e) {
-        return res.json({error: e});
         return res.status(400).json({ success: false });
     }
 };

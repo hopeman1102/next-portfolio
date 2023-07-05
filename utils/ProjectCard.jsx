@@ -44,9 +44,9 @@ const ProjectCard = ({ type, leftAlign, title, description, images, skills, url,
 								(leftAlign ? 'justify-start' : 'justify-end')
 							}
 						>
-							{skills.map((tech, index) => (
+							{/* {skills.map((tech, index) => (
 								<span key={index}>{tech}</span>
-							))}
+							))} */}
 						</div>
 					</div>
 				</header>
