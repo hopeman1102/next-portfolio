@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useState  } from 'react';
 
 const ExpCard = ({ company, title, start, end }) => {
-	const [imgSrc, setImgSrc] = useState('/assets/images/companies/'+decodeURIComponent(company)+'.png');
+	const [imgSrc, setImgSrc] = useState('/assets/images/companies/'+company+'.png');
 	return (
 		<div className='md:flex items-center gap-3 p-4 bg-sh-dark-500 border-2 border-sh-dark rounded-lg text-sh-white hover:shadow-lg transition-transform transform ease-in hover:scale-[1.02]'>
 			<div className='flex items-center gap-3'>
