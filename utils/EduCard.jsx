@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useState  } from 'react';
 
 const EduCard = ({ school, degree, from, to }) => {
-	const [imgSrc, setImgSrc] = useState('/assets/images/institutions/'+school+'.png');
+	const [imgSrc, setImgSrc] = useState('/assets/images/institutions/'+decodeURIComponent(school)+'.png');
 	return (
 		<div className='md:flex items-center gap-3 p-4 bg-sh-dark-500 border-2 border-sh-dark rounded-lg text-sh-white hover:shadow-lg transition-transform transform ease-in hover:scale-[1.02]'>
 			<div className='flex items-center gap-3'>

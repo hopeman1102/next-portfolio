@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useState  } from 'react';
 
-const ProjectCard = ({ type, leftAlign, title, description, images, skills, url, github }) => {
+const ProjectCard = ({ type, leftAlign, title, description, images, url, github }) => {
 	const defaultImage = '/assets/images/projects/default.png';
-	const [imgSrc, setImgSrc] = useState(images.length > 0 ? `/assets/images/projects/${type}/${images[0]}` : defaultImage);
+	const [imgSrc, setImgSrc] = useState(images.length > 0 ? `/assets/images/projects/${type}/${decodeURIComponent(images[0])}` : defaultImage);
 	return (
 		<div
 			className={
