@@ -149,6 +149,31 @@ const handler = async (req, res) => {
                 const category = await Niche.findById(account.category);
                 const resume = await Resume.findById(account.resumeId).populate('baseId');
                 const projects = await Project.find({_id: {$in: bid.projects}});
+                if(projects.length == 0) {
+                    return res.status(400).json({ success: false });
+                }
+                const data = {
+                    category: category.name,
+                    firstName: account.firstName,
+                    lastName: account.lastName,
+                    photo: account.photo,
+                    overView: resume.overView,
+                    skills: resume.skills,
+                    education: resume.baseId.education,
+                    experience: resume.baseId.experience,
+                    projects
+                }
+                return res.status(200).json({ success: true, data })
+            }
+        } else {
+            const account = await Account.findById(req.query.id);
+            if(account) {
+                const category = await Niche.findById(account.category);
+                const resume = await Resume.findById(account.resumeId).populate('baseId');
+                const projects = await Project.find({resume});
+                if(projects.length == 0) {
+                    return res.status(400).json({ success: false });
+                }
                 const data = {
                     category: category.name,
                     firstName: account.firstName,
